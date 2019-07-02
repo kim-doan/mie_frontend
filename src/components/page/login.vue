@@ -1,6 +1,7 @@
 <template>
+  <div>
+  <sublogo></sublogo>
   <v-container fluid fill-height>
-      안녕하세요
     <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
         <v-card class="elevation-12">
@@ -22,10 +23,12 @@
       </v-flex>
     </v-layout>
   </v-container>
+</div>
 </template>
 
 <script>
 import axios from 'axios'
+import sublogo from '../sublogo/sublogo_login';
 
 export default {
   data () {
@@ -42,6 +45,29 @@ export default {
         .then(r => console.log(r.data))
         .catch(e => console.error(e.message))
     }
+  },
+  components: {
+    sublogo,
   }
 }
 </script>
+
+<style>
+.theme--dark.v-toolbar {
+    background-color: #343a40 !important;
+    color: #fff;
+}
+.bg-secondary {
+    background-color: #343a40 !important;
+}
+.theme--light.v-btn:not(.v-btn--icon):not(.v-btn--flat) {
+    background-color: #343a40 !important;
+}
+.v-btn__content {
+  color: #fff;
+}
+.primary.lighten-1 {
+    background-color: #343a40!important;
+    border-color: #343a40 !important;
+}
+</style>

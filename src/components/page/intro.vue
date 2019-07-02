@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom:100px;">
+  <div style="margin-bottom:100px;margin-top: 10px;">
     <hooper :progress="true" :autoPlay="true" :playSpeed="10000">
       <slide>
         <img src="../../assets/bg_main.jpg" alt="bg1"/>
@@ -121,7 +121,6 @@ export default {
   width: 1500px;
   height: 100%;
   margin: auto;
-  margin-bottom: 20px;
 }
 .breadcrumb {
   margin-bottom: 0px;

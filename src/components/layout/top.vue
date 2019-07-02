@@ -11,11 +11,11 @@
       <b-collapse is-nav id="nav_collapse" style="margin-left:100px;">
         <b-navbar-nav>
           <b-nav-item-dropdown text="MIE 소개" class="mr-sm-5">
-            <topItem link="company" icon="sss">
+            <topItem link="/introduce/labintro" icon="sss">
               연구실소개
             </topItem>
             <b-dropdown-divider></b-dropdown-divider>
-            <topItem link="group" icon="sss">
+            <topItem link="/introduce/professorintro" icon="sss">
               교수님소개
             </topItem>
           </b-nav-item-dropdown>
@@ -102,6 +102,7 @@
             <b-dropdown-item href="#">한국어</b-dropdown-item>
             <b-dropdown-item href="#">English</b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item href="/#/member/login">로그인</b-nav-item>
 
           <b-nav-item-dropdown right>
             <!-- Using button-content slot -->
@@ -130,14 +131,17 @@
 </script>
 
 <style scope>
+.bg-secondary {
+    background-color: #343a40 !important;
+}
 .navbar-dark .navbar-nav .nav-link {
     color: white;
 }
 .breadcrumb {
-  padding: 5px;
+  padding: 0px;
   width:1500px;
   margin: auto;
-  background-color: #eee;
+  background-color: #fff;
   border-radius:0px;
 }
 .breadcrumb-item.active {
