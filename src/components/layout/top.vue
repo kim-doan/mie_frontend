@@ -20,17 +20,17 @@
             </topItem>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="연구실구성원" class="mr-sm-5">
-            <topItem link="test" icon="sss">
+            <topItem link="/member/phd" icon="sss">
               박사과정
             </topItem>
-            <topItem link="hello" icon="sss">
+            <topItem link="/member/phm" icon="sss">
               석사과정
             </topItem>
             <b-dropdown-divider></b-dropdown-divider>
-            <topItem link="hello" icon="sss">
+            <topItem link="/member/master" icon="sss">
               졸업생(석사)
             </topItem>
-            <topItem link="hello" icon="sss">
+            <topItem link="/member/doctor" icon="sss">
               졸업생(박사)
             </topItem>
           </b-nav-item-dropdown>
@@ -102,7 +102,7 @@
             <b-dropdown-item href="#">한국어</b-dropdown-item>
             <b-dropdown-item href="#">English</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item href="/#/member/login">로그인</b-nav-item>
+          <b-nav-item href="/#/member/login" style="inline-size: max-content;">로그인</b-nav-item>
 
           <b-nav-item-dropdown right>
             <!-- Using button-content slot -->
