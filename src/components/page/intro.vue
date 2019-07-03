@@ -118,8 +118,8 @@ export default {
 
 <style>
 .hooper {
-  width: 1500px;
-  height: 100%;
+  width: 1500px !important;
+  height: 100% !important;
   margin: auto;
 }
 .breadcrumb {
@@ -127,7 +127,7 @@ export default {
 }
 @media (min-width: 1200px) {
 .container {
-  max-width:1500px;
+  max-width:1500px !important;
 }
 }
 .left_menu {

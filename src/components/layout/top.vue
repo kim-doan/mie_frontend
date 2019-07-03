@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-navbar toggleable="md" type="dark" variant="secondary">
+    <b-navbar toggleable="md" type="dark" variant="dark">
 
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
@@ -135,13 +135,13 @@
     background-color: #343a40 !important;
 }
 .navbar-dark .navbar-nav .nav-link {
-    color: white;
+    color: white !important;
 }
 .breadcrumb {
-  padding: 0px;
+  padding: 0px !important;
   width:1500px;
   margin: auto;
-  background-color: #fff;
+  background-color: #fff !important;
   border-radius:0px;
 }
 .breadcrumb-item.active {
