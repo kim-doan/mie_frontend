@@ -11,6 +11,7 @@ import phd from '@/components/page/phd'
 import phm from '@/components/page/phm'
 import doctor from '@/components/page/doctor'
 import master from '@/components/page/master'
+import register from '@/components/page/register'
 
 Vue.use(Router)
 
@@ -50,6 +51,18 @@ export default new Router({
               text: '회원관리 - 로그인',
               bref: '/login'
             }],
+          }
+        },
+        {
+          path: 'register',
+          name: register,
+          component: register,
+          meta: {
+            title: '회원관리 - 회원가입',
+            breadcrumb: [{
+              text: '회원관리 - 회원가입',
+              bref: '/register'
+            }]
           }
         },
         {

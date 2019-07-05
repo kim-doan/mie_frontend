@@ -123,7 +123,7 @@ export default {
   margin: auto;
 }
 .breadcrumb {
-  margin-bottom: 0px;
+  margin-bottom: 0px !important;
 }
 @media (min-width: 1200px) {
 .container {

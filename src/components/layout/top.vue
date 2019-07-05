@@ -103,7 +103,7 @@
             <b-dropdown-item href="#">English</b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item href="/#/member/login" style="inline-size: max-content;">로그인</b-nav-item>
-
+          <b-nav-item href="/#/member/register" style="inline-size: max-content;">회원가입</b-nav-item>
           <b-nav-item-dropdown right>
             <!-- Using button-content slot -->
             <template slot="button-content">
