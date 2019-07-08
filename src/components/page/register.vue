@@ -11,8 +11,8 @@
             <form>
               <v-select
                 v-validate="'required'"
-                :items="items"
-                v-model="select"
+                :items="form.items"
+                v-model="form.select"
                 :error-messages="errors.collect('select')"
                 label="구성원(선택)"
                 data-vv-name="select"
@@ -20,7 +20,7 @@
               ></v-select>
               <v-text-field
                 v-validate="'required|max:10'"
-                v-model="name"
+                v-model="form.name"
                 :counter="10"
                 :error-messages="errors.collect('name')"
                 label="이름"
@@ -29,7 +29,7 @@
               ></v-text-field>
               <v-text-field
                 v-validate="'required|min:4|max:20'"
-                v-model="id"
+                v-model="form.id"
                 :counter="20"
                 :error-messages="errors.collect('id')"
                 label="아이디"
@@ -38,7 +38,7 @@
               ></v-text-field>
               <v-text-field
                 v-validate="'required|min:6|max:40'"
-                v-model="password"
+                v-model="form.password"
                 :counter="40"
                 :error-messages="errors.collect('password')"
                 label="비밀번호"
@@ -48,7 +48,7 @@
               ></v-text-field>
               <v-text-field
                 v-validate="'required|email'"
-                v-model="email"
+                v-model="form.email"
                 :error-messages="errors.collect('email')"
                 label="E-mail"
                 data-vv-name="email"
@@ -56,7 +56,7 @@
               ></v-text-field>
               <v-text-field
                 v-validate="'required|min:8|max:12'"
-                v-model="phone"
+                v-model="form.phone"
                 :counter="10"
                 :error-messages="errors.collect('phone')"
                 label="휴대폰"
@@ -81,6 +81,18 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <v-snackbar
+  v-model="sb.act"
+>
+  {{ sb.msg }}
+  <v-btn
+    :color="sb.color"
+    flat
+    @click="sb.act = false"
+  >
+    닫기
+  </v-btn>
+</v-snackbar>
   </v-container>
 </template>
 
@@ -92,18 +104,25 @@ export default {
   },
 
   data: () => ({
-    name: '',
-    id: '',
-    email: '',
-    password: '',
-    select: null,
-    items: [
-      '학부생',
-      '대학원생(석사)',
-      '대학원생(박사)',
-      '졸업생(석사)',
-      '졸업생(박사)'
-    ],
+    form: {
+      name: '',
+      id: '',
+      email: '',
+      password: '',
+      select: null,
+      items: [
+        '학부생',
+        '대학원생(석사)',
+        '대학원생(박사)',
+        '졸업생(석사)',
+        '졸업생(박사)'
+      ],
+    },
+    sb: {
+        act: false,
+        msg: '',
+        color: 'warning'
+    },
     checkbox: null,
     dictionary: {
       attributes: {
@@ -151,17 +170,32 @@ export default {
   methods: {
     submit () {
       this.$validator.validateAll()
-    },
-    clear () {
-      this.name = ''
-      this.id = ''
-      this.email = ''
-      this.password = ''
-      this.phone=''
-      this.select = null
-      this.checkbox = null
-      this.$validator.reset()
-    }
+      .then(r => {
+        if (!r) throw new Error('모두 기입해주세요')
+        return this.$axios.post('/api/members', this.form)
+      })
+      .then(r => {
+        if (!r.data.success) throw new Error('서버가 거부했습니다.')
+        this.pop('가입 완료 되었습니다.', 'success')
+
+        this.$route.push('/member/login')
+      })
+      .catch(e => this.pop(e.message, 'warning'))
+  },
+  pop(m, cl) {
+    this.sb.act = true
+    this.sb.msg = m
+    this.sb.color = cl
+  },
+  clear () {
+    this.form.id = ''
+    this.form.password = ''
+    this.form.name = ''
+    this.checkbox = null
+    this.form.phone = ''
+    this.form.email = ''
+    this.$validator.reset()
   }
+}
 }
 </script>
