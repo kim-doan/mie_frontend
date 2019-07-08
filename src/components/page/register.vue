@@ -11,8 +11,8 @@
             <form>
               <v-select
                 v-validate="'required'"
-                :items="form.items"
-                v-model="form.select"
+                :items="items"
+                v-model="form.type"
                 :error-messages="errors.collect('select')"
                 label="구성원(선택)"
                 data-vv-name="select"
@@ -29,11 +29,11 @@
               ></v-text-field>
               <v-text-field
                 v-validate="'required|min:4|max:20'"
-                v-model="form.id"
+                v-model="form.username"
                 :counter="20"
-                :error-messages="errors.collect('id')"
+                :error-messages="errors.collect('username')"
                 label="아이디"
-                data-vv-name="id"
+                data-vv-name="username"
                 required
               ></v-text-field>
               <v-text-field
@@ -97,6 +97,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
   $_veeValidate: {
@@ -106,18 +107,20 @@ export default {
   data: () => ({
     form: {
       name: '',
-      id: '',
+      username: '',
       email: '',
       password: '',
-      select: null,
-      items: [
-        '학부생',
-        '대학원생(석사)',
-        '대학원생(박사)',
-        '졸업생(석사)',
-        '졸업생(박사)'
-      ],
+      phone: '',
+      type: ''
     },
+    select: null,
+    items: [
+      '학부생',
+      '대학원생(석사)',
+      '대학원생(박사)',
+      '졸업생(석사)',
+      '졸업생(박사)'
+    ],
     sb: {
         act: false,
         msg: '',
@@ -172,13 +175,12 @@ export default {
       this.$validator.validateAll()
       .then(r => {
         if (!r) throw new Error('모두 기입해주세요')
-        return this.$axios.post('/api/members', this.form)
+        return axios.post('http://35.221.101.135:8080/api/members', this.form)
       })
       .then(r => {
-        if (!r.data.success) throw new Error('서버가 거부했습니다.')
+        if (!r.data.status) throw new Error('서버가 거부했습니다.')
         this.pop('가입 완료 되었습니다.', 'success')
-
-        this.$route.push('/member/login')
+        this.$router.push('/#/member/login')
       })
       .catch(e => this.pop(e.message, 'warning'))
   },
@@ -188,7 +190,7 @@ export default {
     this.sb.color = cl
   },
   clear () {
-    this.form.id = ''
+    this.form.username = ''
     this.form.password = ''
     this.form.name = ''
     this.checkbox = null

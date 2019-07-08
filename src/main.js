@@ -6,13 +6,13 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import VeeValidate from 'vee-validate'
+import axios from 'axios'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import '@babel/polyfill'
 
-const axios = require('axios');
 Vue.use(Vuetify)
 Vue.use(BootstrapVue)
 Vue.use(VeeValidate)
