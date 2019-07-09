@@ -178,9 +178,11 @@ export default {
         return axios.post('http://35.221.101.135:8080/api/members', this.form)
       })
       .then(r => {
-        if (!r.data.status) throw new Error('서버가 거부했습니다.')
-        this.pop('가입 완료 되었습니다.', 'success')
-        this.$router.push('/#/member/login')
+        if (r.data.status == 'Success') {
+          this.$router.push('/member/login')
+        } else if(r.data.status == 'Fail') {
+          this.pop(r.data.errorMessage, 'fail')
+        }
       })
       .catch(e => this.pop(e.message, 'warning'))
   },
