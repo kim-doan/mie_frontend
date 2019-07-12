@@ -179,6 +179,7 @@ export default {
       })
       .then(r => {
         if (r.data.status == 'Success') {
+          this.pop(r.data.Message, 'Success')
           this.$router.push('/member/login')
         } else if(r.data.status == 'Fail') {
           this.pop(r.data.errorMessage, 'fail')

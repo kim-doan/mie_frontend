@@ -98,20 +98,23 @@
 
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown text="Lang" right style="display:none;">
-            <b-dropdown-item href="#">한국어</b-dropdown-item>
-            <b-dropdown-item href="#">English</b-dropdown-item>
+          <b-nav-item href="/#/member/login" style="inline-size: max-content;" v-if="$store.state.token == null">로그인</b-nav-item>
+          <b-nav-item href="/#/member/register" style="inline-size: max-content;" v-if="$store.state.token == null">회원가입</b-nav-item>
+
+          <b-nav-item-dropdown right v-if="$store.state.token != null">
+            <template slot="button-content">
+              {{$store.state.profile.type}} {{$store.state.profile.name}}님
+            </template>
+            <b-dropdown-item href="#">마이페이지</b-dropdown-item>
+            <b-dropdown-item @click="logout">로그아웃</b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item href="/#/member/login" style="inline-size: max-content;">로그인</b-nav-item>
-          <b-nav-item href="/#/member/register" style="inline-size: max-content;">회원가입</b-nav-item>
-          <b-nav-item-dropdown right>
-            <!-- Using button-content slot -->
+          <!-- <b-nav-item-dropdown right>
             <template slot="button-content">
               마이페이지
             </template>
             <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Signout</b-dropdown-item>
-          </b-nav-item-dropdown>
+            <b-dropdown-item @click="logout">로그아웃</b-dropdown-item>
+          </b-nav-item-dropdown> -->
         </b-navbar-nav>
 
       </b-collapse>
@@ -123,10 +126,18 @@
 
 <script>
   import topItem from './topItem';
+  import axios from 'axios'
 
   export default {
     name: 'top',
     components: { topItem },
+
+    methods: {
+      logout() {
+        //logout 후 리다이렉트
+        this.$store.dispatch('LOGOUT').then(() => this.$router.push('/'))
+      }
+    }
   };
 </script>
 

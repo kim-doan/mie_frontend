@@ -12,6 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'vuetify/dist/vuetify.min.css' // Ensure you are using css-loader
 import '@babel/polyfill'
+import { store } from './store'
 
 Vue.use(Vuetify)
 Vue.use(BootstrapVue)
@@ -22,6 +23,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

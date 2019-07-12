@@ -12,6 +12,7 @@ import phm from '@/components/page/phm'
 import doctor from '@/components/page/doctor'
 import master from '@/components/page/master'
 import register from '@/components/page/register'
+import header from '@/components/header'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
           }
         }
       ]
+    },
+    {
+      path: '/header',
+      name: 'header',
+      component: header
     },
     {
       path: '/member',
