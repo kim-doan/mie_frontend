@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import sublogo from '../sublogo/sublogo_member';
+import sublogo from '../../layout/sublogo';
 
 export default {
   components: {

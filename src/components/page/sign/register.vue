@@ -1,7 +1,6 @@
 <template>
-  <v-container fluid fill-height>
-    <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md4>
+    <modal name="modal-register" transition="pop-out" :width="modalWidth" :height="620">
+      <v-flex>
         <v-card class="elevation-12">
           <v-toolbar dark color="primary">
             <v-toolbar-title>회원가입</v-toolbar-title>
@@ -80,7 +79,6 @@
           </v-card-text>
         </v-card>
       </v-flex>
-    </v-layout>
     <v-snackbar
   v-model="sb.act"
 >
@@ -93,17 +91,23 @@
     닫기
   </v-btn>
 </v-snackbar>
-  </v-container>
+</modal>
 </template>
 
 <script>
 import axios from 'axios'
 
+const MODAL_WIDTH = 500
+
 export default {
   $_veeValidate: {
     validator: 'new'
   },
-
+  created () {
+  this.modalWidth = window.innerWidth < MODAL_WIDTH
+    ? MODAL_WIDTH / 2
+    : MODAL_WIDTH
+  },
   data: () => ({
     form: {
       name: '',

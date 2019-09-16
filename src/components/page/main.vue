@@ -15,7 +15,12 @@
       <hooper-navigation slot="hooper-addons"></hooper-navigation>
       <hooper-pagination slot="hooper-addons"></hooper-pagination>
     </hooper>
-    <div class="container b_menu">
+
+      <!-- MODAL -->
+      <modal-login/>
+      <modal-register/>
+
+    <div class="container b_menu" style="max-width:1500px;">
         <div class="row">
             <div class="col-md-9 left_menu">
               <div class="row">
@@ -105,13 +110,17 @@ import {
   Navigation as HooperNavigation
   } from 'hooper';
 import 'hooper/dist/hooper.css';
+import ModalLogin from "../page/sign/login"
+import ModalRegister from "../page/sign/register"
 export default {
-  name: 'intro',
+  name: 'main',
   components: {
     Hooper,
     Slide,
     HooperPagination,
-    HooperNavigation
+    HooperNavigation,
+    ModalLogin,
+    ModalRegister
   }
 };
 </script>
@@ -125,11 +134,7 @@ export default {
 .breadcrumb {
   margin-bottom: 0px !important;
 }
-@media (min-width: 1200px) {
-.container {
-  max-width:1500px !important;
-}
-}
+
 .left_menu {
   float:left;
   height:500px;

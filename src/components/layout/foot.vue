@@ -2,7 +2,6 @@
   <v-footer
     height="auto"
     color="primary lighten-1"
-    absolute
   >
   <v-alert
     :value="alert"

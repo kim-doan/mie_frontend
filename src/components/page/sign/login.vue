@@ -1,9 +1,7 @@
 <template>
+  <modal name="modal-login" transition="pop-out" :width="modalWidth" :height="280">
   <div>
-  <sublogo></sublogo>
-  <v-container fluid fill-height>
-    <v-layout align-center justify-center>
-      <v-flex xs12 sm8 md4>
+      <v-flex>
         <v-card class="elevation-12">
           <v-toolbar dark color="primary">
             <v-toolbar-title>로그인</v-toolbar-title>
@@ -21,7 +19,6 @@
           </v-card-actions>
         </v-card>
       </v-flex>
-    </v-layout>
     <v-snackbar
   v-model="sb.act"
 >
@@ -34,13 +31,14 @@
     닫기
   </v-btn>
 </v-snackbar>
-  </v-container>
 </div>
+</modal>
 </template>
 
 <script>
 import axios from 'axios'
-import sublogo from '../sublogo/sublogo_login';
+
+const MODAL_WIDTH = 500
 
 export default {
   data () {
@@ -54,7 +52,13 @@ export default {
           msg: '',
           color: 'warning'
       },
+      modalWidth : MODAL_WIDTH
     }
+  },
+  created () {
+  this.modalWidth = window.innerWidth < MODAL_WIDTH
+    ? MODAL_WIDTH / 2
+    : MODAL_WIDTH
   },
   methods: {
     signIn () {
@@ -80,7 +84,6 @@ export default {
     },
   },
   components: {
-    sublogo,
   }
 }
 </script>
@@ -102,5 +105,15 @@ export default {
 .primary.lighten-1 {
     background-color: #343a40!important;
     border-color: #343a40 !important;
+}
+.pop-out-enter-active,
+.pop-out-leave-active {
+  transition: all 0.5s;
+}
+
+.pop-out-enter,
+.pop-out-leave-active {
+  opacity: 0;
+  transform: translateY(24px);
 }
 </style>
