@@ -1,9 +1,9 @@
 <template>
   <div style="margin-bottom:100px;margin-top: 10px;">
     <hooper :progress="true" :autoPlay="true" :playSpeed="10000">
-      <slide>
+      <!--<slide>
         <img src="../../assets/bg_main.jpg" alt="bg1"/>
-      </slide>
+      </slide>-->
       <slide>
         <img src="../../assets/bg_main2.jpg" alt="bg2"/>
       </slide>
@@ -20,7 +20,7 @@
       <modal-login/>
       <modal-register/>
 
-    <div class="container b_menu" style="max-width:1500px;">
+    <div class="container b_menu" style="max-width:1500px; width:100%">
         <div class="row">
             <div class="col-md-9 left_menu">
               <div class="row">
@@ -113,7 +113,7 @@ import 'hooper/dist/hooper.css';
 import ModalLogin from "../page/sign/login"
 import ModalRegister from "../page/sign/register"
 export default {
-  name: 'main',
+  name: 'mainPage',
   components: {
     Hooper,
     Slide,

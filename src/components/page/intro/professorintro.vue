@@ -1,7 +1,7 @@
 <template>
   <div>
     <sublogo :title="sublogo.title" :bg="sublogo.bg"></sublogo>
-    <div class="container">
+    <div class="container resizing">
       <div class="row has-feedback">
 
         <!-- 左侧列表 -->
@@ -45,13 +45,22 @@
 
             <div class="sect_right_text1">
 
-              <div class="container">
-                  <div class="row">
-                      <div class="col-md-3 left">
-                        <img src="../../../assets/jung.jpg"/>
+              <div class="container" style="width:100%">
+                <!-- 한국어 -->
+                  <div class="row" v-if="language==='korea'">
+                      <div class="col-xs-3 left">
+                        <table class="table table-bordered profile">
+                          <tbody>
+                            <tr>
+                              <div class="profile_div">
+                                <img class="profile_img" :src="professorKR.data.profile_img"/>
+                              </div>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                       <div class="col-md-9 right">
-                        <h3>정회경 교수님</h3>
+                        <h3>{{professorKR.data.name}} 교수님</h3>
 
                         <table class="table table-bordered">
                   				<caption>이표는 tel, e-mail 정보를 제공합니다.</caption>
@@ -60,82 +69,125 @@
                   					<col style="width:80%;">
                   				</colgroup>
                   				<tbody>
+                            <tr>
+                              <th scope="row">직책</th>
+                              <td>{{professorKR.data.position}}</td>
+                            </tr>
                   					<tr>
-                  						<th scope="row">Tel</th>
-                  						<td>053-785-1000</td>
+                  						<th scope="row">전화</th>
+                  						<td>{{professorKR.data.tel}}</td>
                   					</tr>
                   					<tr>
-                  						<th scope="row">E-mail</th>
-                  						<td>ykuk@dgist.ac.kr</td>
+                  						<th scope="row">이메일</th>
+                  						<td>{{professorKR.data.email}}</td>
                   					</tr>
+                            <tr>
+                              <th scope="row">취미</th>
+                              <td>{{professorKR.data.hobby}}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">가족</th>
+                              <td>{{professorKR.data.family}}</td>
+                            </tr>
                   				</tbody>
                   			</table>
+                      </div>
+                  </div>
+                  <!-- 영어 -->
+                  <div class="row" v-if="language==='english'">
+                      <div class="col-md-3 left">
+                        <table class="table table-bordered profile">
+                          <tbody>
+                            <tr>
+                              <div class="profile_div">
+                                <img class="profile_img" :src="professorEN.data.profile_img"/>
+                              </div>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="col-md-9 right">
+                        <h3>Professor. {{professorEN.data.name}}</h3>
+
+                        <table class="table table-bordered">
+                          <caption>이표는 tel, e-mail 정보를 제공합니다.</caption>
+                          <colgroup>
+                            <col style="width:20%">
+                            <col style="width:80%;">
+                          </colgroup>
+                          <tbody>
+                            <tr>
+                              <th scope="row">Position</th>
+                              <td>{{professorEN.data.position}}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Tel</th>
+                              <td>{{professorEN.data.tel}}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">E-mail</th>
+                              <td>{{professorEN.data.email}}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">hobby</th>
+                              <td>{{professorEN.data.hobby}}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">family</th>
+                              <td>{{professorEN.data.family}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                   </div>
                   <div class="section"></div>
 
                   <div class="row">
-                    <h3 class="title">주요 약력</h3>
+                    <h3 class="title" v-if="language === 'korea'">주요 약력</h3>
+                    <h3 class="title" v-if="language === 'english'">History</h3>
                     <table class="table table-bordered">
                   		<caption>이표는 년도에 따른 주요 학력 정보를 제공합니다.</caption>
                   		<colgroup>
                   			<col style="width:20%">
                   			<col style="width:80%;">
                   		</colgroup>
-                  		<tbody>
-                  			<tr>
-                  				<th scope="row">1978.9 ~ 1981.8</th>
-                  				<td>Pennsylvania State University 물리학, 이학박사</td>
+                      <!-- 한국어 -->
+                  		<tbody v-if="language === 'korea'">
+                  			<tr v-for="item in historyKR_Sort">
+                  				<th scope="row">{{item.history}}</th>
+                  				<td>{{item.name}}</td>
                   			</tr>
-                  			<tr>
-                  				<th scope="row">1975.3 ~ 1977.2	</th>
-                  				<td>서울대학교 물리학, 이학석사</td>
-                  			</tr>
-                  			<tr>
-                  				<th scope="row">1971.3 ~ 1975.2	</th>
-                  				<td>서울대학교 물리학, 이학사</td>
-                  			</tr>
-                  			<tr>
-                  				<th scope="row">1968.3 ~ 1971.2	</th>
-                  				<td>경기고등학교</td>
-                  			</tr>
-                  			<!--<tr>
-                  				<th scope="row">1972</th>
-                  				<td>경기고등학교</td>
-                  			</tr>-->
                   		</tbody>
+                      <!-- 영어 -->
+                      <tbody v-if="language === 'english'">
+                        <tr v-for="item in historyEN_Sort">
+                          <th scope="row">{{item.history}}</th>
+                          <td>{{item.name}}</td>
+                        </tr>
+                      </tbody>
                   	</table>
                   </div>
 
                   <div class="row">
-                    <h3 class="title">외부 활동</h3>
+                    <h3 class="title" v-if="language === 'korea'">외부 활동</h3>
+                    <h3 class="title" v-if="language === 'english'">Outside Activity</h3>
                     <table class="table table-bordered">
                       <caption>이표는 년도에 따른 주요 학력 정보를 제공합니다.</caption>
                       <colgroup>
                         <col style="width:20%">
                         <col style="width:80%;">
                       </colgroup>
-                      <tbody>
-                        <tr>
-                          <th scope="row">1978.9 ~ 1981.8</th>
-                          <td>Pennsylvania State University 물리학, 이학박사</td>
+                      <tbody v-if="language === 'korea'">
+                        <tr v-for="item in activityKR_Sort">
+                          <th scope="row">{{item.activity}}</th>
+                          <td>{{item.name}}</td>
                         </tr>
-                        <tr>
-                          <th scope="row">1975.3 ~ 1977.2	</th>
-                          <td>서울대학교 물리학, 이학석사</td>
+                      </tbody>
+                      <tbody v-if="language === 'english'">
+                        <tr v-for="item in activityEN_Sort">
+                          <th scope="row">{{item.activity}}</th>
+                          <td>{{item.name}}</td>
                         </tr>
-                        <tr>
-                          <th scope="row">1971.3 ~ 1975.2	</th>
-                          <td>서울대학교 물리학, 이학사</td>
-                        </tr>
-                        <tr>
-                          <th scope="row">1968.3 ~ 1971.2	</th>
-                          <td>경기고등학교</td>
-                        </tr>
-                        <!--<tr>
-                          <th scope="row">1972</th>
-                          <td>경기고등학교</td>
-                        </tr>-->
                       </tbody>
                     </table>
                   </div>
@@ -159,15 +211,29 @@
   </div>
 </template>
 <script>
+  import axios from 'axios'
   import sublogo from '../../layout/sublogo';
   import sidebar from '../../layout/sidebar'
 
-
   export default{
-    name: 'labintro',
+    name: 'Prointro',
     components: {
       sublogo,
       sidebar,
+    },
+    computed: {
+      historyKR_Sort : function() {
+        return _.orderBy(this.historyKR, 'id', 'esc');
+      },
+      historyEN_Sort : function() {
+        return _.orderBy(this.historyEN, 'id', 'esc');
+      },
+      activityKR_Sort : function() {
+        return _.orderBy(this.activityKR, 'id', 'esc');
+      },
+      activityEN_Sort : function() {
+        return _.orderBy(this.activityEN, 'id', 'esc');
+      }
     },
     data: () => ({
       sublogo: {
@@ -190,7 +256,79 @@
       }
       ],
       language: 'korea',
-    })
+      professorEN: [],
+      professorKR: [],
+      historyEN: [{
+        id : 0,
+        history : '',
+        name: '',
+        professorId: 0
+      }],
+      historyKR: [{
+        id : 0,
+        history : '',
+        name: '',
+        professorId: 0
+      }],
+      activityKR: [{
+        id : 0,
+        activity : '',
+        name: '',
+        professorId: 0
+      }],
+      activityEN: [{
+        id : 0,
+        activity : '',
+        name: '',
+        professorId: 0
+      }],
+
+    }),
+    created() {
+
+      const vm = this;
+      //교수님 정보 받아오기 1 = 영문 2 = 한국어
+      axios.get('http://35.200.100.93:8080/api/intro/professor/1').then(response => {
+        var result = response && response.data
+
+        vm.professorEN = result;
+      });
+
+      //교수님 정보 받아오기 1 = 영문 2 = 한국어
+      axios.get('http://35.200.100.93:8080/api/intro/professor/2').then(response => {
+        var result = response && response.data
+
+        vm.professorKR = result;
+      });
+
+      //연혁 정보 받아오기
+      axios.get('http://35.200.100.93:8080/api/intro/history/1').then(response => {
+        var result = response && response.data.list;
+
+        vm.historyEN = result;
+      });
+
+      //연혁 정보 받아오기
+      axios.get('http://35.200.100.93:8080/api/intro/history/2').then(response => {
+        var result = response && response.data.list;
+
+        vm.historyKR = result;
+      });
+
+      //외부활동 정보 받아오기
+      axios.get('http://35.200.100.93:8080/api/intro/activity/1').then(response => {
+        var result = response && response.data.list;
+
+        vm.activityEN = result;
+      });
+
+      //외부활동 정보 받아오기
+      axios.get('http://35.200.100.93:8080/api/intro/activity/2').then(response => {
+        var result = response && response.data.list;
+
+        vm.activityKR = result;
+      });
+    }
   };
 </script>
 <style src="../../../assets/css/pageA.css">

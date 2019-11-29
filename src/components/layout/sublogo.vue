@@ -4,7 +4,7 @@
   <modal-login/>
   <modal-register/>
   <img :src="bg" alt="bg1" style="width:100%; height: 200px;"/>
-  <div class="container clearfix position_nbanner noleftpadding norightpadding">
+  <div class="container clearfix position_nbanner noleftpadding norightpadding resizing">
                     <div class="col-sm-3 col-xs-5 ine_pos_left noleftpadding norightpadding">
                         <div>{{ title }}</div>
                     </div>

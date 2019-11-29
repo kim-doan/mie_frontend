@@ -10,7 +10,7 @@
         <a href="javascript:void(0);" data-id="72">{{ title }}</a>
 
         <ul class="sanji" style="margin: 0;">
-          <li v-for="menu in menus" :class="menu.selected">
+          <li v-for="menu in sideMenu_Sort" :class="menu.selected">
             <a :href="menu.href">{{ menu.name }}</a>
           </li>
           <!--<li class="li_hover">
@@ -45,6 +45,11 @@ export default {
         selected: String,
       }
     }
+  },
+  computed: {
+    sideMenu_Sort : function() {
+      return _.orderBy(this.menus, 'boardId', 'esc');
+    },
   }
 };
 </script>

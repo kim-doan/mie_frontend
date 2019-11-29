@@ -21,13 +21,14 @@ export const store = new Vuex.Store( {
   },
   actions: {
     LOGIN ({commit}, form) {
-      return axios.post('http://35.221.101.135:8080/api/members/login', form)
+      return axios.post('http://35.200.100.93:8080/api/members/login', form)
       .then(({data}) => {
         if(data.status == "Success") {
         commit('LOGIN', data)
         commit('getToken')
         axios.defaults.headers.common['X-AUTH-TOKEN'] = data.token;
         router.push('/')
+        //회원정보
         store.dispatch('PROFILE', form.username)
       } else if(data.status == "Fail") {
         alert(data.errorMessage);
@@ -40,11 +41,11 @@ export const store = new Vuex.Store( {
       commit('LOGOUT')
     },
     PROFILE({commit}, username) {
-      axios.get('http://35.221.101.135:8080/api/members/profile/' + username)
+      axios.get('http://35.200.100.93:8080/api/members/profile/' + username)
       .then(({data}) => {
         commit('PROFILE', data)
       })
-    }
+    },
   },
   mutations: {
     LOGIN (state, {token}) {
@@ -62,16 +63,21 @@ export const store = new Vuex.Store( {
       state.profile.roles = roles;
 
       localStorage.username = username;
+      localStorage.roles = roles;
     },
     LOGOUT (state) {
       //토큰 정보 삭제
       state.accessToken = null
       state.token = null
       delete localStorage.accessToken
+      delete localStorage.username
+      delete localStorage.roles
     },
+    //토큰 저장
     getToken(state) {
       state.token = localStorage.getItem('accessToken')
     },
+    //토큰 삭제
     delToken(state) {
       localStorage.removeItem('accessToken')
       state.token = null

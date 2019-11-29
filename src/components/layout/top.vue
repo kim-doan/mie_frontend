@@ -8,7 +8,7 @@
         <img src="../../assets/logo.png" alt="logo" width="100%"/>
       </b-navbar-brand>
 
-      <b-collapse is-nav id="nav_collapse" style="margin-left:100px;">
+      <b-collapse is-nav id="nav_collapse" style="margin-left:160px;">
         <b-navbar-nav>
           <b-nav-item-dropdown text="MIE 소개" class="mr-sm-5">
             <topItem link="/introduce/labintro" icon="sss">
@@ -35,7 +35,7 @@
             </topItem>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="연구활동" class="mr-sm-5">
-            <topItem link="test" icon="sss">
+            <topItem link="/research/board?id=1&category=research" icon="sss">
               Book
             </topItem>
             <topItem link="hello" icon="sss">
@@ -61,11 +61,11 @@
             </topItem>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="강의자료" class="mr-sm-5">
-            <topItem link="test" icon="sss">
+            <topItem link="/lecturedata/department?board=41" icon="sss">
               학부
             </topItem>
             <b-dropdown-divider></b-dropdown-divider>
-            <topItem link="hello" icon="sss">
+            <topItem link="/lecturedata/graduate" icon="sss">
               대학원
             </topItem>
           </b-nav-item-dropdown>
@@ -99,10 +99,10 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
         <!--  <b-nav-item href="/#/member/login" style="inline-size: max-content;" v-if="$store.state.token == null">로그인</b-nav-item>-->
-          <b-nav-item style="inline-size: max-content;" v-if="$store.state.token == null" @click="$modal.show('modal-login');">로그인</b-nav-item>
-          <b-nav-item style="inline-size: max-content;" v-if="$store.state.token == null" @click="$modal.show('modal-register');">회원가입</b-nav-item>
+          <b-nav-item style="inline-size: max-content;" v-if="$store.state.token == null || $store.state.profile.name == ''" @click="$modal.show('modal-login');">로그인</b-nav-item>
+          <b-nav-item style="inline-size: max-content;" v-if="$store.state.token == null || $store.state.profile.name == ''" @click="$modal.show('modal-register');">회원가입</b-nav-item>
 
-          <b-nav-item-dropdown right v-if="$store.state.token != null">
+          <b-nav-item-dropdown right v-if="$store.state.token != null && $store.state.profile.name != ''">
             <template slot="button-content">
               {{$store.state.profile.type}} {{$store.state.profile.name}}님
             </template>
@@ -145,7 +145,7 @@
         this.$modal.show('modal-login');
       },
       hide() {
-        this.$modal.hide('hello-world');
+        this.$modal.hide('modal-login');
       }
     }
   };

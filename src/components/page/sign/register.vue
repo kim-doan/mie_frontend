@@ -179,12 +179,13 @@ export default {
       this.$validator.validateAll()
       .then(r => {
         if (!r) throw new Error('모두 기입해주세요')
-        return axios.post('http://35.221.101.135:8080/api/members', this.form)
+        return axios.post('http://35.200.100.93:8080/api/members/register', this.form)
       })
       .then(r => {
         if (r.data.status == 'Success') {
           this.pop(r.data.Message, 'Success')
-          this.$router.push('/member/login')
+          this.$modal.hide('modal-register') // 요청 후 모달 숨기기
+          this.$modal.show('modal-login') // 요청 후 로그인 모달 보이기
         } else if(r.data.status == 'Fail') {
           this.pop(r.data.errorMessage, 'fail')
         }

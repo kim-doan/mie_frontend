@@ -1,7 +1,7 @@
 <template>
 <div>
   <sublogo :title="sublogo.title" :bg="sublogo.bg"></sublogo>
-  <div class="container">
+  <div class="container resizing">
     <div class="row has-feedback">
 
       <!-- 左侧列表 -->
@@ -49,20 +49,22 @@
               멀디미디어 정보공학 연구실
               <h4>Lab.of Multimedia Information Engineering.</h4>
             </div>
-            <div class="sect_text1_1" v-if="language === 'korea'">
-              <p style="color:#FF3636;">본 연구실에서는 21세기 고도의 정보화 사회에 필수적 요소 중 하나인 멀티미디어 정보처리에 대한 전반적인 연구 및 개발 서비스를 제공하기 위한 일련의 연구를 수행 하고 있다.</p>
-              <p>이를 통해 미래의 복잡하고 불확실한 기업환경에 대처하고, 미래의 정보화사회에 창조적으로 적응할 수 있는 정보마인드를 갖춘 전문 기술인의 양성과, 지역사회의 정보화와 세계화에 기여 및 봉사하는 고급정보인력을 양성하고 있다.</p>
+            <div class="sect_text1_1" v-if="language === 'korea'" v-html = "ko_intro">
+              <!--<p style="color:#FF3636;"><b>본 연구실에서는 21세기 고도의 정보화 사회에 필수적 요소 중 하나인 멀티미디어 정보처리에 대한 전반적인 연구 및 개발 서비스를 제공하기 위한 일련의 연구를 수행 하고 있다.</b></p>
+              <p>이를 통해 미래의 복잡하고 불확실한 기업환경에 대처하고, 미래의 정보화사회에 창조적으로 적응할 수 있는 정보마인드를 갖춘 전문 기술인의 양성과, 지역사회의 정보화와 세계화에 기여 및 봉사하는 고급정보인력을 양성하고 있다.</p>
               <p>21세기 우리에게 다가오고 있는 인터넷 생활환경시대에 요구되는 핵심 정보기술 개발을 목표로 컴퓨터, 소프트웨어 기술개발, 영상정보처리기술, 소프트웨어공학기술, 언어공학기술, 인터넷서비스 기술, 전자상거래 기술, 차세대 디지털컨텐츠 기술 등 원천기술의 확보 및 응용 기술 개발을 위한 노력을 기울이고 있다.</p>
               <p>특히 XML(eXtensible Markup Language)을 기반으로 다양한 연구를 수행하였으며 현재 선진 기술과 경쟁력있는 기술개발에 전력을 쏟을 계획으로 e-Logistics, SVG, XML-Canonical, e-Catalog, MPEG-4(PMP), MPEG-21(REL/RDD) 등의 다양한 연구를 수행하고 있다.</p>
               <p>이와 같은 다양한 연구의 수행으로 기술 축적 및 인재 양성에 노력하고 있으며 신기술 습득으로 인한 국가경쟁력 확보와 정보 세계화에 발 맞추어 나아가고 있다.</p>
+            -->
             </div>
 
-            <div class="sect_text1_1" v-if="language === 'english'">
-              <p style="color:#FF3636;">In this Lab, Now working of research and development about processing Multimedia Information which one of essential element in Information-oriented society of 21 century.</p>
+            <div class="sect_text1_1" v-if="language === 'english'" v-html = "en_intro">
+              <!--<p style="color:#FF3636;"><b>In this Lab, Now working of research and development about processing Multimedia Information which one of essential element in Information-oriented society of 21 century.</b></p>
               <p>Trough this, train expert who can cope with complex and uncertain business environment of future, and adapt to information-oriented society.</p>
               <p>Working up to obtain Key Original Technology(Development of Sofrware, Visual & Broadcasting Information Process, Software Engineering, Internet Service, T-Commerce, Next Generation Digital Content)to develop Core Information Technology which requested in the Internet Living Environment Age of future.</p>
               <p>Until now, Various research based on XML are completed. And now working up especially to research about e-Logistics(based on Ubiqultous and RFID), SVG, Digital Library, Web Services(Include Fast Web Services), e-Catalog, Software Technology of Digital Broadcasting, MPEG-2/4/7/21, Semantic Web/Ontology.</p>
               <p>Through these various research, working up to accumulate new technology and train expert engineer.</p>
+            -->
             </div>
           </div>
 
@@ -85,6 +87,7 @@
 <script>
 import sublogo from '../../layout/sublogo'
 import sidebar from '../../layout/sidebar'
+import axios from 'axios'
 
 export default {
   name: 'labintro',
@@ -113,11 +116,54 @@ export default {
     }
     ],
     language: 'korea',
+    ko_intro: '',
+    en_intro: ''
   }),
+  created() {
+    const vm = this;
 
+    //한국어 연구실 정보 받아오기
+    axios.get('http://35.200.100.93:8080/api/intro/profile/ko').then(response => {
+      var result = response && response.data;
+
+      vm.ko_intro = result.data.intro;
+    });
+
+    //영어 연구실 정보 받아오기
+    axios.get('http://35.200.100.93:8080/api/intro/profile/en').then(response => {
+      var result = response && response.data;
+
+      vm.en_intro = result.data.intro;
+    });
+  },
 };
 </script>
 <style>
+@media (min-width: 1904px) {
+  .resizing {
+      -webkit-box-flex: 1;
+      -ms-flex: 1 1 100%;
+      flex: 1 1 100%;
+      margin: auto;
+      padding: 0px;
+      width: 70% !important;
+  }
+}
+@media (min-width: 1624px) {
+  .container {
+    width:100%;
+  }
+}
+@media (min-width: 1264px) {
+  .container {
+    width:1264px;
+  }
+}
+@media only screen and (min-width: 960px) {
+  .container {
+    width:1264px;
+  }
+}
 .items:hover {
   box-shadow: 0 200px 0 0 rgba(0,0,0,0.25) inset, 0 -200px 0 0 rgba(0,0,0,0.25) inset;
 }

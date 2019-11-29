@@ -64,18 +64,7 @@ export default {
     signIn () {
       this.$store.dispatch('LOGIN', this.form)
       .catch(({message}) => this.pop(message))
-      // axios.post('http://35.221.101.135:8080/api/members/login', this.form)
-      //   .then(r => {
-      //     if(r.data.status == "Success") {
-      //       this.pop(r.data.message);
-      //       localStorage.accessToken = r.data.token;
-      //
-      //       axios.defaults.headers.common['X-AUTH-TOKEN'] = r.data.token;
-      //     } else if(r.data.status == "Fail") {
-      //       this.pop(r.data.errorMessage);
-      //     }
-      //   })
-      //   .catch(e => console.error(e.message))
+      this.$modal.hide('modal-login'); // 요청 후 모달 숨기기
     },
     pop(m, cl) {
       this.sb.act = true

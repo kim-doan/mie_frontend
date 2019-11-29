@@ -1,7 +1,7 @@
 <template>
   <div>
     <sublogo :title="sublogo.title" :bg="sublogo.bg"></sublogo>
-    <div class="container">
+    <div class="container resizing">
       <div class="row has-feedback">
 
 <!-- sidebar 영역 -->
@@ -41,7 +41,7 @@
           <div class="ine_sect_right2" style="height: auto; margin-bottom: 30px;">
             <div class="sect_right_text1">
               <div class="container">
-                <magic-grid :maxCols=2 :maxColWidth=700>
+                <magic-grid :maxCols="2" :maxColWidth="900" :anmated="false">
                 <card
                   v-for="(post, i) in posts"
                   :key="i"
@@ -107,7 +107,7 @@ export default {
   fetch('//jsonplaceholder.typicode.com/posts')
     .then(response => response.json())
     .then(json => {
-      this.posts = json.slice(0, 12)
+      this.posts = json.slice(0, 3)
     })
 }
 }
