@@ -19,17 +19,21 @@
       <!-- MODAL -->
       <modal-login/>
       <modal-register/>
+      <modal-view/>
 
     <div class="container b_menu" style="max-width:1500px; width:100%">
         <div class="row">
             <div class="col-md-9 left_menu">
               <div class="row">
                   <div class="col-md-3 t1">
+
                       <div class="num1">
                         <div class="t_margin">
                         <h2>연구원</h2>
-                        <img src="../../assets/plus_icon.png" alt="plus"/>
-                        <p>소개 내용</p>
+                        <router-link to="/member/phd">
+                          <img src="../../assets/plus_icon.png" alt="plus"/>
+                        </router-link>
+                        <p>MIE 연구실 구성원</p>
                         </div>
                       </div>
                   </div>
@@ -38,7 +42,7 @@
                         <div class="t_margin">
                         <h2>연구활동</h2>
                         <img src="../../assets/plus_icon.png" alt="plus"/>
-                        <p>소개 내용</p>
+                        <p>논문, 특허, 과제, 소프트웨어</p>
                         </div>
                       </div>
                   </div>
@@ -46,9 +50,10 @@
                     <div class="num3" style="background:#184c8d; color:white;">
                       <div class="t_margin">
                       <h2 style="color:white;">강의자료</h2>
-                      <img src="../../assets/plus_icon2.png" alt="plus"/>
+                      <router-link to="/lecturedata/department?board=41">
+                        <img src="../../assets/plus_icon2.png" alt="plus"/>
+                      </router-link>
                       <img src="../../assets/open-book.png" alt="book" style="position:absolute; top:100px; opacity: 0.8;"/>
-                      <p>소개 내용</p>
                     </div>
                     </div>
                   </div>
@@ -58,8 +63,14 @@
                     <div class="num4">
                       <div class="t_margin">
                         <h2>공지사항</h2>
-                        <img src="../../assets/plus_icon.png" alt="plus"/>
-                        <p>게시판 연동 필요</p>
+                        <router-link to="/community/community?board=91">
+                          <img src="../../assets/plus_icon.png" alt="plus"/>
+                        </router-link>
+                        <div class="item">
+                          <li v-for="item in noticePosts_Sort">
+                            <a @click="postView(item.postId)">{{item.title}}</a>
+                          </li>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -67,8 +78,20 @@
                     <div class="num5">
                       <div class="t_margin">
                         <h2>자료실</h2>
-                        <img src="../../assets/plus_icon.png" alt="plus"/>
-                        <p>게시판 연동 필요</p>
+                        <router-link to="/etcdata/etcdata?board=86">
+                          <img src="../../assets/plus_icon.png" alt="plus"/>
+                        </router-link>
+                        <div class="item">
+                        <li>
+                          <router-link to="/lecturedata/department?board=41">강의자료실</router-link>
+                        </li>
+                        <li>
+                          <router-link to="/seminadata/seminadata?board=81">세미나자료실</router-link>
+                        </li>
+                        <li>
+                          <router-link to="/etcdata/etcdata?board=86">기타자료실</router-link>
+                        </li>
+                      </div>
                       </div>
                     </div>
                   </div>
@@ -112,6 +135,8 @@ import {
 import 'hooper/dist/hooper.css';
 import ModalLogin from "../page/sign/login"
 import ModalRegister from "../page/sign/register"
+import ModalView from '../page/board/postView'
+import axios from 'axios';
 export default {
   name: 'mainPage',
   components: {
@@ -120,12 +145,47 @@ export default {
     HooperPagination,
     HooperNavigation,
     ModalLogin,
-    ModalRegister
+    ModalRegister,
+    ModalView,
+  },
+  data: () => ({
+    notice: [],
+    temp: [],
+    postData: [],
+  }),
+  mounted() {
+    //초기데이터 로딩
+    axios.get('http://35.200.100.93:8080/api/board/info/id/' + 91 + '/posts').then(response => {
+      var result = response && response.data
+      this.temp = result.list;
+      for(var i=0;i<5;i++) {
+        this.notice.splice(i, 1, this.temp[i]);
+      }
+    });
+  },
+  computed: {
+    noticePosts_Sort : function() {
+      return _.orderBy(this.notice, 'postId', 'desc');
+    },
+  },
+  methods: {
+    postView(postId) {
+      axios.get('http://35.200.100.93:8080/api/board/post/' + postId).then(response => {
+        var result = response && response.data
+        this.postData = result.data;
+
+        this.$modal.show('modal-view', {postData: this.postData});
+      });
+    }
   }
 };
 </script>
 
 <style>
+.t1 a, .t2 a, .t3 a {
+  color: unset;
+  text-decoration: none;
+}
 .hooper {
   width: 1500px !important;
   height: 100% !important;
@@ -162,9 +222,24 @@ export default {
   position: absolute;
   top: 27px;
   right: 30px;
+  cursor: pointer;
 }
-.t_margin p {
+.t_margin p, .item{
   margin-top: 20px;
+}
+.t_margin li {
+  margin-top: 7px;
+  width:100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.t_margin li a{
+  color: unset;
+}
+.t_margin li:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }
 .t_margin h2 {
   font-size: 18px;

@@ -35,7 +35,7 @@
       <v-btn color="blue darken-1" flat @click.native="save">저장</v-btn>
     </v-card-actions>
   </v-card>
-      <v-btn slot="activator" color="primary" dark class="mb-2">강의자료 / 추가 게시판 추가</v-btn>
+      <v-btn slot="activator" color="primary" dark class="mb-2">게시판 추가</v-btn>
 </v-dialog>
 <v-card>
   <v-card-title>
@@ -193,7 +193,6 @@ export default {
       if (this.editedIndex > -1) {
         Object.assign(this.category[this.editedIndex], this.editedItem) // ui상에서 변경
 
-                    console.log(this.editedItem)
         //게시판 정보 수정하기
         axios.put('http://35.200.100.93:8080/api/board/update', this.editedItem)
         .then(r => {
@@ -203,16 +202,18 @@ export default {
         })
       } else {
         this.category.push(this.editedItem) // ui상 테이블에 추가
-        console.log(this.editedItem)
         //게시판 추가하기
         axios.post('http://35.200.100.93:8080/api/board/add/', this.editedItem)
         .then(r => {
           if(r.data.success === true) {
-            alert(r.data.msg)
+            alert('게시판 추가에 ' + r.data.msg)
+            document.location.reload(); // 현재페이지 새로고침
           }
         })
       }
       this.close()
+
+
     }
   },
 
@@ -228,3 +229,8 @@ export default {
   },
 }
 </script>
+<style>
+.v-btn__content {
+  color: unset !important;
+}
+</style>

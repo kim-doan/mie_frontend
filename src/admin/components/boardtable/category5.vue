@@ -10,7 +10,7 @@
       <v-container grid-list-md>
         <v-layout wrap>
           <v-flex xs12 sm6 md6>
-            <v-text-field v-model="editedItem.name" label="이름"></v-text-field>
+            <v-text-field v-model="editedItem.name" label="주소(영어)"></v-text-field>
           </v-flex>
           <v-flex xs12 sm6 md6>
             <v-select
@@ -23,6 +23,9 @@
               required
             ></v-select>
           </v-flex>
+          <v-flex xs12 sm6 md6>
+            <v-text-field v-model="editedItem.title" label="이름"></v-text-field>
+          </v-flex>
         </v-layout>
       </v-container>
     </v-card-text>
@@ -32,11 +35,10 @@
       <v-btn color="blue darken-1" flat @click.native="save">저장</v-btn>
     </v-card-actions>
   </v-card>
-      <v-btn slot="activator" color="primary" dark class="mb-2">커뮤니티 게시판 추가</v-btn>
 </v-dialog>
 <v-card>
   <v-card-title>
-    <b>강의자료 / 학부</b>
+    <b>커뮤니티</b>
   </v-card-title>
 <v-data-table
   class="elevation-1"
@@ -47,6 +49,7 @@
   <template slot="items" slot-scope="props">
     <td class="text-xs-center" >{{ props.item.boardId }}</td>
     <td class="text-xs-left">{{ props.item.name }}</td>
+    <td class="text-xs-left">{{ props.item.title }}</td>
     <td class="text-xs-left">{{ props.item.modifiedAt }}</td>
     <td class="text-xs-left">
       <v-btn icon class="mx-0" @click="editItem(props.item)">
@@ -77,16 +80,19 @@ export default {
     editedItem: {
       boardId: null,
       name: '',
-      category: null
+      category: null,
+      title: ''
     },
     defaultItem: {
       name: '',
-      category: null
+      category: null,
+      title: ''
     },
     tempItem: {
       boardId: null,
       name: '',
-      category: null
+      category: null,
+      title: ''
     },
     headers: [
       {
@@ -95,14 +101,19 @@ export default {
         sortable: true
       },
       {
-        text: '이름',
-        value: 'title',
+        text: '주소',
+        value: 'name',
         sortable: false
+      },
+      {
+        text: '제목',
+        value: 'title',
+        sortable: true
       },
       {
         text: '수정일',
         value: 'modifiedAt',
-        sortable: false
+        sortable: true
       },
       {
         text: '액션',
@@ -137,7 +148,7 @@ export default {
     editItem (item) {
       this.editedIndex = this.category.indexOf(item)
       //tempitem을 쓰는 이유 : 서버에 폼 전송시 정형화된 틀에 맞추기 위함
-      this.tempItem.boardId = this.editedIndex + 1;
+      this.tempItem.boardId = item.boardId;
       this.tempItem.name = item.name;
       this.editedItem = Object.assign({}, this.tempItem)
 
@@ -180,8 +191,9 @@ export default {
       }
       if (this.editedIndex > -1) {
         Object.assign(this.category[this.editedIndex], this.editedItem) // ui상에서 변경
-        //게시판 정보 수정하기
 
+                    console.log(this.editedItem)
+        //게시판 정보 수정하기
         axios.put('http://35.200.100.93:8080/api/board/update', this.editedItem)
         .then(r => {
           if(r.data.success === true) {
@@ -215,3 +227,5 @@ export default {
   },
 }
 </script>
+<style>
+</style>

@@ -108,11 +108,11 @@ export default {
     ],
     contents: [],
     sublogo: {
-      title: '강의자료',
+      title: '기타자료실',
       bg: require('../../../assets/bg_title2.jpg')
     },
     sidebar: {
-      title: '대학원',
+      title: '자료실',
     },
     menus: [],
     language: 'korea',
@@ -165,7 +165,7 @@ export default {
     const vm = this;
 
     //게시판 정보 가져오기
-    axios.get('http://35.200.100.93:8080/api/board/list/2').then(response => {
+    axios.get('http://35.200.100.93:8080/api/board/list/4').then(response => {
       var result = response && response.data
 
       for(var i=0;i<result.length;i++) { // 폼에 맞추기위해 객체 이름 변경
@@ -177,7 +177,7 @@ export default {
       }
       vm.menus = result;
       for(var i=0;i<vm.menus.length;i++) { //사이드 메뉴에 주소 넣기
-        vm.menus[i].href = '/lecturedata/graduate?board=' + vm.menus[i].boardId;
+        vm.menus[i].href = '/etcdata/etcdata?board=' + vm.menus[i].boardId;
       }
     });
 

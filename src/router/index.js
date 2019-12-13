@@ -16,6 +16,9 @@ import master from '@/components/page/member/master'
 import board from '@/components/page/board/board'
 import department from '@/components/page/lecturedata/department'
 import graduate from '@/components/page/lecturedata/graduate'
+import seminadata from '@/components/page/seminadata/seminadata'
+import etcdata from '@/components/page/etcdata/etcdata'
+import community from '@/components/page/community/community'
 
 import header from '@/components/header'
 
@@ -24,6 +27,7 @@ import dashboard from '@/admin/components/pages/dashboard'
 import labintroEdit from '@/admin/components/pages/labintroEdit'
 import professorintroEdit from '@/admin/components/pages/professorintroEdit'
 import boardEdit from '@/admin/components/pages/boardEdit'
+import labmemberEdit from '@/admin/components/pages/labmemberEdit'
 Vue.use(Router)
 
 const requireAuth = () => (to, from, next) => {
@@ -149,16 +153,50 @@ export default new Router({
       path: '/lecturedata',
       name: 'lacturedata',
       component: index,
-      children: [{
-        path: 'department',
-        component: department
-      },
-      {
-        path: 'graduate',
-        component: graduate
-      }
-    ]
-  },
+      children: [
+        {
+          path: 'department',
+          component: department
+        },
+        {
+          path: 'graduate',
+          component: graduate
+        }
+      ]
+    },
+    {
+      path: '/seminadata',
+      name: 'seminadata',
+      component: index,
+      children: [
+        {
+          path: 'seminadata',
+          component: seminadata
+        }
+      ]
+    },
+    {
+      path: '/etcdata',
+      name: 'etcdata',
+      component: index,
+      children: [
+        {
+          path: 'etcdata',
+          component: etcdata
+        }
+      ]
+    },
+    {
+      path: '/community',
+      name: 'community',
+      component: index,
+      children: [
+        {
+          path: 'community',
+          component: community
+        }
+      ]
+    },
     {
       path: '/admin',
       name: 'admin',
@@ -180,6 +218,10 @@ export default new Router({
         {
           path: 'boardEdit',
           component: boardEdit,
+        },
+        {
+          path: 'labmemberEdit',
+          component: labmemberEdit
         }
       ]
     }

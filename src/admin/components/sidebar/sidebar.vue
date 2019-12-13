@@ -12,6 +12,9 @@
       <a id="boardEdit" href="/#/admin/boardEdit">
         <span>게시판 수정</span>
       </a>
+      <a id="labmemberEdit" href="/#/admin/labmemberEdit">
+        <span>연구실구성원 수정</span>
+      </a>
     </Slide>
 </template>
 

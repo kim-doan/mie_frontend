@@ -10,8 +10,8 @@
           <sidebar :menus="menus" :title="sidebar.title"></sidebar>
           <div class="ine_sect_left_2 clearfix">
             <div class="fl resize center col-xs-12 nopadding">
-              <div class="items" >
-                <a v-on:click="language='korea'">
+              <div class="items">
+                <a @click="$modal.show('modal-post');">
                   <font-awesome-icon icon="pencil-alt" />
                   <h3>게시글 작성</h3>
                 </a>
@@ -42,12 +42,13 @@
                   :headers="headers"
                   :items="contents"
                   :search="search"
+                  :pagination.sync="pagination"
                   :rows-per-page-items="[10, 25]">
                   <template slot="items" slot-scope="props">
-                    <td class="text-xs-center" >{{ props.item.postId }}</td>
-                    <td class="text-xs-left" style="width:520px;">{{ props.item.title }}</td>
-                    <td class="text-xs-left">{{ props.item.author }}</td>
-                    <td class="text-xs-left">{{ props.item.createAt }}</td>
+                    <td class="text-xs-center" v-on:click="postView(props.item.postId)">{{ props.item.postId }}</td>
+                    <td class="text-xs-left" style="width:520px;" v-on:click="postView(props.item.postId)">{{ props.item.title }}</td>
+                    <td class="text-xs-left" v-on:click="postView(props.item.postId)">{{ props.item.author }}</td>
+                    <td class="text-xs-left" v-on:click="postView(props.item.postId)">{{ props.item.createAt }}</td>
                     <!-- <td class="text-xs-left">{{ props.item.address.city }}</td> -->
                   </template>
                   <template slot="pageText" slot-scope="props">
@@ -75,33 +76,37 @@ import axios from 'axios'
 export default {
   components: {
     sublogo,
-    sidebar,
+    sidebar
   },
   data: () => ({
+    pagination: {
+      sortBy: 'createAt',
+      descending: true
+    },
     search: '',
-    contents: [],
     headers: [
       {
         text: '번호',
         value: 'postId',
-        sortable: true
+        sortable: true,
       },
       {
         text: '제목',
         value: 'title',
-        sortable: false
+        sortable: false,
       },
       {
         text: '작성자',
         value: 'author',
-        sortable: false
+        sortable: false,
       },
       {
         text: '등록일',
         value: 'createAt',
-        sortable: false
+        sortable: true,
       }
     ],
+    contents: [],
     sublogo: {
       title: '강의자료',
       bg: require('../../../assets/bg_title2.jpg')
@@ -114,6 +119,7 @@ export default {
     posts: [],
     menuLangth: 0,
     count: 0,
+    postData: {},
   }),
   methods: {
     say(event) {
@@ -137,9 +143,16 @@ export default {
         }
         this.$set(this.menus[i], 'selected', '')
       }
-    }
-  },
+    },
+    postView(postId) {
+      axios.get('http://35.200.100.93:8080/api/board/post/' + postId).then(response => {
+        var result = response && response.data
+        this.postData = result.data;
 
+        this.$modal.show('modal-view', {postData: this.postData});
+      });
+    },
+  },
   updated() {
     for(var i=0;i<this.menus.length;i++) {
       if(this.$route.query.board == this.menus[i].boardId) {
@@ -147,7 +160,6 @@ export default {
         break;
       }
     }
-
   },
   mounted() {
     const vm = this;

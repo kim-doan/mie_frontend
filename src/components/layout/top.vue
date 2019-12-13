@@ -65,32 +65,23 @@
               학부
             </topItem>
             <b-dropdown-divider></b-dropdown-divider>
-            <topItem link="/lecturedata/graduate" icon="sss">
+            <topItem link="/lecturedata/graduate?board=63" icon="sss">
               대학원
             </topItem>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="세미나자료" class="mr-sm-5">
-            <topItem link="test" icon="sss">
-              Schedule
-            </topItem>
-            <topItem link="hello" icon="sss">
-              Paper
+            <topItem v-for="menu in seminaMenu_Sort" :key="menu.boardId" :link="'/seminadata/seminadata?board=' + menu.boardId" icon="sss">
+              {{menu.name}}
             </topItem>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="기타자료실" class="mr-sm-5">
-            <topItem link="test" icon="sss">
-              test
-            </topItem>
-            <topItem link="hello" icon="sss">
-              hello-vue
+            <topItem v-for="menu in etcMenu_Sort" :key="menu.boardId" :link="'/etcdata/etcdata?board=' + menu.boardId" icon="sss">
+              {{menu.name}}
             </topItem>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown text="커뮤니티" class="mr-sm-5">
-            <topItem link="test" icon="sss">
-              test
-            </topItem>
-            <topItem link="hello" icon="sss">
-              hello-vue
+            <topItem v-for="menu in communityMenu_Sort" :key="menu.boardId" :link="'/community/community?board=' + menu.boardId" icon="sss">
+              {{menu.name}}
             </topItem>
           </b-nav-item-dropdown>
           <!--<b-nav-item href="#" disabled>추후예정</b-nav-item>-->
@@ -136,17 +127,72 @@
        topItem,
        login
      },
+    data: () => ({
+      semina: [],
+      etc: [],
+      community: [],
+    }),
     methods: {
       logout() {
         //logout 후 리다이렉트
         this.$store.dispatch('LOGOUT').then(() => this.$router.push('/'))
       },
-      show() {
-        this.$modal.show('modal-login');
+    },
+    computed: {
+      seminaMenu_Sort : function() {
+        return _.orderBy(this.semina, 'boardId', 'esc');
       },
-      hide() {
-        this.$modal.hide('modal-login');
-      }
+      etcMenu_Sort : function() {
+        return _.orderBy(this.etc, 'boardId', 'esc');
+      },
+      communityMenu_Sort : function() {
+        return _.orderBy(this.community, 'boardId', 'esc');
+      },
+    },
+    mounted() {
+      const vm = this;
+
+      //게시판 정보 가져오기
+      axios.get('http://35.200.100.93:8080/api/board/list/3').then(response => {
+        var result = response && response.data
+
+        for(var i=0;i<result.length;i++) { // 폼에 맞추기위해 객체 이름 변경
+          Object.defineProperty(result[i], "href", Object.getOwnPropertyDescriptor(result[i], "name"));
+          delete result[i]["name"];
+
+          Object.defineProperty(result[i], "name", Object.getOwnPropertyDescriptor(result[i], "title"));
+          delete result[i]["title"];
+        }
+        vm.semina = result;
+      });
+
+      //게시판 정보 가져오기
+      axios.get('http://35.200.100.93:8080/api/board/list/4').then(response => {
+        var result = response && response.data
+
+        for(var i=0;i<result.length;i++) { // 폼에 맞추기위해 객체 이름 변경
+          Object.defineProperty(result[i], "href", Object.getOwnPropertyDescriptor(result[i], "name"));
+          delete result[i]["name"];
+
+          Object.defineProperty(result[i], "name", Object.getOwnPropertyDescriptor(result[i], "title"));
+          delete result[i]["title"];
+        }
+        vm.etc = result;
+      });
+
+      //게시판 정보 가져오기
+      axios.get('http://35.200.100.93:8080/api/board/list/5').then(response => {
+        var result = response && response.data
+
+        for(var i=0;i<result.length;i++) { // 폼에 맞추기위해 객체 이름 변경
+          Object.defineProperty(result[i], "href", Object.getOwnPropertyDescriptor(result[i], "name"));
+          delete result[i]["name"];
+
+          Object.defineProperty(result[i], "name", Object.getOwnPropertyDescriptor(result[i], "title"));
+          delete result[i]["title"];
+        }
+        vm.community = result;
+      });
     }
   };
 </script>

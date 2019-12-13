@@ -1,35 +1,76 @@
 <template>
   <div class="card large">
-  <table width="900" border="0" cellspacing="0" cellpadding="0" align="center" id="tabst_04">
+  <table width="850" border="0" cellspacing="0" cellpadding="0" align="center" id="tabst_04">
   	<tbody><tr>
-  		<td width="20%" rowspan="5"><img src=""></td>
+  		<td width="20%" rowspan="5"><img :src="this.profile_img" style="min-width:120px; max-width:160px;"></td>
   		<th width="20%">성명</th>
-  		<td width="60%" class="thle">정대진(Dae-Jin Jeong)</td>
+  		<td width="60%" class="thle">{{this.name}}({{this.enname}})</td>
   	</tr>
   	<tr>
   		<th>입학년도</th>
-  		<td class="thle">2015</td>
+  		<td class="thle">{{this.admission}}</td>
   	</tr>
   	<tr>
   		<th>E-mail</th>
-  		<td class="thle">daejin4u@nate.com</td>
+  		<td class="thle">{{this.email}}</td>
   	</tr>
   	<tr>
-  		<th>연구분야
-  		</th><td class="thle">통계/안드로이드/수치계산</td>
+  		<th>관심분야
+  		</th><td class="thle">{{this.field}}</td>
   	</tr>
   	<tr>
   		<th>근무지</th>
-  		<td class="thle">리얼타임테크</td>
+  		<td class="thle">{{this.workplace}}</td>
   	</tr>
   	<tr>
   		<th>논문</th>
   		<td colspan="2" class="thle">
-  <hr style="border:#b9b9b9 0.5px dashed"><b style="font-size: 13px;">박사학위논문</b><br>&nbsp; · 분산 IoT센서 기반 실험실 안전관리 시스템(Distributed IoT Sensor based Laboratory Safety Management System)<br><hr style="border:#b9b9b9 0.5px dashed"><b style="font-size: 13px;">석사학위논문</b><br>&nbsp; · 임베디드 리눅스를 이용한 IP-PBX 시스템 설계 및 구현(Design and Implementation on IP-PBX System using Embedded Linux)<br><hr style="border:#b9b9b9 0.5px dashed"><b style="font-size: 13px;">국내논문지</b><br>&nbsp; · 분산 IoT 센서 기반 실험실 안전관리 시스템<br>&nbsp; · RasPBX 기반의 IP-PBX 시스템<br><hr style="border:#b9b9b9 0.5px dashed"><b style="font-size: 13px;">국외논문지</b><br>&nbsp; · A Study on the Ways of Performing Voice Match with Voice Analysis Methods Using Spectral Contents<br><hr style="border:#b9b9b9 0.5px dashed"><b style="font-size: 13px;">국내학술대회논문</b><br>&nbsp; · 분산 다중 센서 기반 실험실 안전 관리 시스템<br>&nbsp; · 다중 IoT 센서 기반 실험실 관리 시스템<br>&nbsp; · 주요 문단 영역 선정 기반 문서 분석 시스템<br>&nbsp; · 사용자 기기 선택에 따른 우선순위 자동 설정 알고리즘<br>&nbsp; · Design of Multiple Routing for Simulcast<br>&nbsp; · Wi-Fi를 활용한 IoT기반 D2D 릴레이션 알고리즘<br>&nbsp; · 사용자 중심 검색 시스템 설계 및 구현<br>&nbsp; · Snort Wireless 기반의 무선 침입 방지 시스템<br><hr style="border:#b9b9b9 0.5px dashed"><b style="font-size: 13px;">국외학술대회논문</b><br>&nbsp; · Design of Personal Exercise Management<br><hr style="border:#b9b9b9 0.5px dashed"><b style="font-size: 13px;">기사 및 수상경력</b><br>&nbsp; ·  2018년 한국정보통신학회 추계학술대회 우수논문상 <br><hr style="border:#b9b9b9 0.5px dashed">		</td>
+          <hr style="border:#b9b9b9 0.5px dashed" v-if="this.paper1.length !== 0">
+            <b style="font-size: 13px;" v-if="this.paper1.length !== 0">박사학위논문</b>
+            <li v-for="(item, i) in paper1" :value="item" :key="item.activitie_id">
+              {{item.title}}
+            </li>
+
+          <hr style="border:#b9b9b9 0.5px dashed" v-if="this.paper2.length !== 0">
+          <b style="font-size: 13px;" v-if="this.paper2.length !== 0">석사학위논문</b>
+          <li v-for="(item, i) in paper2" :value="item" :key="item.activitie_id">
+            {{item.title}}
+          </li>
+
+          <hr style="border:#b9b9b9 0.5px dashed" v-if="this.paper3.length !== 0">
+          <b style="font-size: 13px;" v-if="this.paper3.length !== 0">국내논문지</b>
+          <li v-for="(item, i) in paper3" :value="item" :key="item.activitie_id">
+            {{item.title}}
+          </li>
+
+          <hr style="border:#b9b9b9 0.5px dashed" v-if="this.paper4.length !== 0">
+          <b style="font-size: 13px;" v-if="this.paper4.length !== 0">국외논문지</b>
+          <li v-for="(item, i) in paper4" :value="item" :key="item.activitie_id">
+            {{item.title}}
+          </li>
+
+          <hr style="border:#b9b9b9 0.5px dashed" v-if="this.paper5.length !== 0">
+          <b style="font-size: 13px;" v-if="this.paper5.length !== 0">국내학술대회논문</b>
+          <li v-for="(item, i) in paper5" :value="item" :key="item.activitie_id">
+            {{item.title}}
+          </li>
+
+          <hr style="border:#b9b9b9 0.5px dashed" v-if="this.paper6.length !== 0">
+          <b style="font-size: 13px;" v-if="this.paper6.length !== 0">국외학술대회논문</b>
+          <li v-for="(item, i) in paper6" :value="item" :key="item.activitie_id">
+            {{item.title}}
+          </li>
+
+          <hr style="border:#b9b9b9 0.5px dashed" v-if="this.paper7.length !== 0">
+          <b style="font-size: 13px;" v-if="this.paper7.length !== 0">기사 및 수상경력</b>
+          <li v-for="(item, i) in paper7" :value="item" :key="item.activitie_id">
+            {{item.title}}
+          </li>
+      </td>
   	</tr>
   	<tr>
   		<th>한마디</th>
-  		<td colspan="2" class="thle"></td>
+  		<td colspan="2" class="thle">{{this.oneword}}</td>
   	</tr>
   </tbody>
 </table>
@@ -53,18 +94,77 @@
 
 <script>
 export default {
-
-  name: 'card',
-
+  data: () => ({
+    paper1: [],
+    paper2: [],
+    paper3: [],
+    paper4: [],
+    paper5: [],
+    paper6: [],
+    paper7: []
+  }),
   props: {
-    title: {
+    name: {
       type: String,
       default: ''
     },
-    body: {
+    enname: {
       type: String,
       default: ''
+    },
+    admission: {
+      type: String,
+      default: ''
+    },
+    email: {
+      type: String,
+      default: ''
+    },
+    field: {
+      type: String,
+      default: ''
+    },
+    workplace: {
+      type: String,
+      default: ''
+    },
+    type: {
+      type: String,
+      default: ''
+    },
+    profile_img: {
+      type: String,
+      default: ''
+    },
+    oneword: {
+      type: String,
+      default: ''
+    },
+    activities: {
+      type: Array,
+      default: () => [{}]
     }
+  },
+  mounted() {
+    for(var i=0;i<this.activities.length;i++) {
+      var type = this.activities[i].type;
+      if(type == 1) {
+        this.paper1.splice(i, 1, this.activities[i]);
+      } else if (type == 2) {
+        this.paper2.splice(i, 1, this.activities[i]);
+      } else if (type == 3) {
+        this.paper3.splice(i, 1, this.activities[i]);
+      } else if (type == 4) {
+        this.paper4.splice(i, 1, this.activities[i]);
+      } else if (type == 5) {
+        this.paper5.splice(i, 1, this.activities[i]);
+      } else if (type == 6) {
+        this.paper6.splice(i, 1, this.activities[i]);
+      } else if (type == 7) {
+        this.paper7.splice(i, 1, this.activities[i]);
+      }
+    }
+
   }
 
 }

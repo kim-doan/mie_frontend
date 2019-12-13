@@ -3,6 +3,10 @@
   <!-- MODAL -->
   <modal-login/>
   <modal-register/>
+  <modal-post/>
+  <modal-file/>
+  <modal-view/>
+  <modal-editpost/>
   <img :src="bg" alt="bg1" style="width:100%; height: 200px;"/>
   <div class="container clearfix position_nbanner noleftpadding norightpadding resizing">
                     <div class="col-sm-3 col-xs-5 ine_pos_left noleftpadding norightpadding">
@@ -15,12 +19,20 @@
 <script>
 import ModalLogin from "../page/sign/login"
 import ModalRegister from "../page/sign/register"
+import ModalPost from '../page/board/addPost'
+import ModalFile from '../page/board/addFile'
+import ModalView from '../page/board/postView'
+import ModalEditpost from '../page/board/editPost'
 
 export default {
   name: 'sublogo',
   components: {
     ModalLogin,
-    ModalRegister
+    ModalRegister,
+    ModalPost,
+    ModalFile,
+    ModalView,
+    ModalEditpost,
   },
   props: {
     title: String,

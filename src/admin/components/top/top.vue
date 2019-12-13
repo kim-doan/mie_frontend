@@ -6,7 +6,7 @@
 
       <b-navbar-brand href="#/admin" style="margin-left:130px;">
       <!--  <img src="../../../assets/logo.png" alt="logo" width="100%"/>-->
-      <h2>Dashboard</h2>
+      <h2>관리자모드</h2>
       </b-navbar-brand>
 
     </b-navbar>

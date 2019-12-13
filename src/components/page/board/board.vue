@@ -162,6 +162,9 @@ export default {
         }
         this.menus[i].selected = '';
       }
+    },
+    postView() {
+      alert('dd');
     }
   },
   mounted () {

@@ -35,11 +35,10 @@
       <v-btn color="blue darken-1" flat @click.native="save">저장</v-btn>
     </v-card-actions>
   </v-card>
-      <!--<v-btn slot="activator" color="primary" dark class="mb-2">강의자료 / 대학원 추가 게시판 추가</v-btn>-->
 </v-dialog>
 <v-card>
   <v-card-title>
-    <b>강의자료 / 대학원</b>
+    <b>커뮤니티</b>
   </v-card-title>
 <v-data-table
   class="elevation-1"
@@ -220,7 +219,7 @@ export default {
     const vm = this;
 
     //카테고리 게시판 GET
-    axios.get('http://35.200.100.93:8080/api/board/list/2').then(response => {
+    axios.get('http://35.200.100.93:8080/api/board/list/6').then(response => {
       var result = response && response.data;
 
       vm.category = result;
